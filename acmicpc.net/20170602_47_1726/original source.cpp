@@ -6,7 +6,7 @@ using namespace std;
 int n, m, sy, sx, sd, ey, ex, ed;
 int arr[102][102];
 int visited[101][101][5];
-int dy[5] = { NULL, 0, 0, 1, -1 };//동서남북 순.. 남쪽이 +방향.. 이것때매 30분 ..
+int dy[5] = { NULL, 0, 0, 1, -1 };//동서남북 순.. 남쪽이 +방향.. 이것때매 30분 ..★★★★★
 int dx[5] = { NULL, 1, -1, 0, 0 };
 int direction[4] = { 1, 3, 2, 4 };
 
