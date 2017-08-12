@@ -51,7 +51,7 @@ int main() {
 	//ют╥б
 	scanf("%d", &n);
 	tree.resize(n + 1);
-	for (int i = 2, a, b; i <= n; i++){
+	for (int i = 1, a, b; i < n; i++){
 		scanf("%d %d", &a, &b);
 		tree[a].push_back(b);
 		tree[b].push_back(a);

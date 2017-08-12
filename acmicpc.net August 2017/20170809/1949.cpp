@@ -57,7 +57,7 @@ int main() {
 		tree[i].num = graph[i].num;
 		visited[i] = -1;
 	}
-	for (int i=2, a, b; i<=n; i++) {
+	for (int i=1, a, b; i<n; i++) {
 		scanf("%d %d", &a, &b);
 		graph[a].edge.push_back(b);
 		graph[b].edge.push_back(a);

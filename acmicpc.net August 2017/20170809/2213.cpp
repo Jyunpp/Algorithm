@@ -77,7 +77,7 @@ int main() {
 	}
 	int a, b;
 	//while(scanf("%d %d", &a, &b)!=eof){
-	for(int i=2; i<=n; i++){
+	for(int i=1; i<n; i++){
 		scanf("%d %d", &a, &b);
 		ver[a].edge.push_back(b);
 		ver[b].edge.push_back(a);
