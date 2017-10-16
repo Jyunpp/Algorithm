@@ -3,6 +3,7 @@
 	그래프에서 한 개의 cycle만 존재할 때.
 	Codeforces Roudn #427 - F 의 부분.
 */
+#define N 100001
 #include <iostream>
 #include <stdio.h>
 #include <vector>
