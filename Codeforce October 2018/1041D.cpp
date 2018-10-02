@@ -1,8 +1,4 @@
-//20181001 22:02 ~ 23:30
-// TLE ¹× Áßº¹ÄÚµå Á¦°ÅÇÒ ÇÊ¿ä.. ´Ù½Ã ÇÏ±â·Î..
-#ifdef _MSC_VER
-#define _CRT_SECURE_NO_WARNINGS
-#endif
+//20181002 retry 22:10 ~ 23:00
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -26,6 +22,7 @@ typedef pair<int, int> P;
 
 int n, h;
 pair<int, int> arr[200001]; //{x1, x2}
+int Ans;
 
 int main() {
 	cin >> n >> h;
@@ -33,78 +30,36 @@ int main() {
 		sd(arr[i].xx);
 		sd(arr[i].yy);
 	}
-	int ans = arr[1].yy - arr[1].xx;
-	int rest = 0;
+	int flyLen = arr[1].yy - arr[1].xx;
 	int currH = h;
-	int i = 2; // i °¥ Â÷·Ê
-	while (currH > 0) {
-		if (i > n) break;
-		int dis = arr[i].xx - arr[i - 1].yy;
-		if (currH >= dis) {
-			ans += dis; rest = 0;
-			currH -= dis;
-			if (currH > 0) {
-				ans += arr[i].yy - arr[i].xx;
-				i++;
-			}
+	int startIdx = 1;
+	int currX = arr[1].yy;
+	Ans = max(Ans, flyLen + currH);
+	int i = 2; // ê°ˆ ê³³
+	while(i<=n){
+		int needH = arr[i].xx - currX;
+		while(flyLen>0){
+			if(needH<currH) break;
+			currX = arr[startIdx+1].yy;
+			flyLen -= arr[startIdx+1].xx - arr[startIdx].xx;
+			currH += arr[startIdx+1].xx - arr[startIdx].yy;
+			startIdx++;
 		}
+		//ê°ˆ ìˆ˜ ìžˆë‹¤ë©´
+		if(flyLen>0){
+			flyLen += arr[i].yy - arr[i-1].yy;
+			currX = arr[i].yy;
+			currH -= arr[i].xx - arr[i-1].yy;
+			Ans = max(Ans, flyLen + currH);
+		}
+		//ì—†ë‹¤ë©´ 
 		else {
-			rest = currH;
-			currH = 0;
-		}
-	}
-	int Ans = ans + rest + currH;
-	int j = 1;
-	while (i <= n) {
-		if (i - 1 != j) {
-			currH += arr[j + 1].xx - arr[j].yy;
-			ans -= arr[j + 1].xx - arr[j].xx;
-			rest = 0;
-			j++;
-			while (currH > 0) {
-				if (i > n) break;
-				int dis = arr[i].xx - arr[i - 1].yy;
-				if (currH >= dis) {
-					ans += dis; rest = 0;
-					currH -= dis;
-					if (currH > 0) {
-						ans += arr[i].yy - arr[i].xx;
-						i++;
-					}
-				}
-				else {
-					rest = currH;
-					currH = 0;
-				}
-			}
-			Ans = max(Ans, ans + rest + currH);
-		}
-		else {
-			ans = arr[j].yy - arr[j].xx;
-			rest = 0;
 			currH = h;
-			Ans = max(Ans, ans + currH);
-			while (currH > 0) {
-				if (i > n) break;
-				int dis = arr[i].xx - arr[i - 1].yy;
-				if (currH >= dis) {
-					ans += dis; rest = 0;
-					currH -= dis;
-					if (currH > 0) {
-						ans += arr[i].yy - arr[i].xx;
-						i++;
-					}
-				}
-				else {
-					rest = currH;
-					currH = 0;
-				}
-			}
-			Ans = max(Ans, ans + rest + currH);
+			flyLen = arr[i].yy - arr[i].xx;
+			currX = arr[i].yy;
+			Ans = max(Ans, flyLen + currH);
 		}
+		i++;
 	}
-	Ans = max(Ans, ans + rest + currH);
-	cout << Ans << endl;
-	//cin >> n;
-	return 0;
+	cout<<Ans<<endl;
 }
