@@ -1,4 +1,5 @@
 // 20181025 01:35 ~ 
+// 20181025 11:55 ~ 12:03
 #include <bits/stdc++.h>
 using namespace std;
 #define sd(x) scanf(" %d", &x);
@@ -12,27 +13,8 @@ ll n, k,m,l;
 
 int main() {
     cin>>n>>m>>k>>l;
-    if(n<m || k+l>n) {
-        cout<<-1<<endl;
-        return 0;
-    } else{
-        if(m>=k+l) {
-            cout<<1<<endl;
-            return 0;
-        } else {
-            ll a = (k+l)/m;
-            if(a*m<=n){
-                if((k+l)%m){
-                    cout<<a+1<<endl;
-                    return 0;
-                }else{
-                cout<<a<<endl;
-                return 0;
-                }
-            } else {
-                cout<<-1<<endl;
-                return 0;
-            }
-        }
-    }
+    ll ans = ((k+l)/m) + ((k+l)%m!=0);
+    if(ans*m>n) ans = -1;
+    cout<<ans<<endl;
+    return 0;    
 }
