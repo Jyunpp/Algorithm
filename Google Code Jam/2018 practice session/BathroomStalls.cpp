@@ -3,7 +3,10 @@
 * N <= 10^18 (= 1000^6 = 2^60)
 *  => 절반씩 줄여나가면, 60번안에 가능.
 */
-// 세번째 케이스 W/A인데 아마도 범위 문제인듯.
+// 세번째 케이스 W/A인데 아마도 범위 문제인듯. 
+// 역시... => pow 결과 ll 해주기.. pow(2,53)부터 이상함. (값은 맞는데 더하면 이상.)
+// X : longlongVar + pow(2, 53)
+// O : longlongVar + (ll) pow(2,53)
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
@@ -23,6 +26,7 @@ using namespace std;
 #define yy second
 #define rep(i, l, r) for(int i=l; i<r; i++)
 #define sortV(v, lambda) sort(v.begin(), v.end(), lambda)
+#define powll(a, b) (ll) pow(a, b)
 
 typedef long long ll;
 typedef pair<int, int> P;
@@ -32,12 +36,14 @@ int t;
 ll n, k;
 
 void divide(queue<Pll> &q, ll curr, ll currCnt) {
+    if(curr <=0) return ;
+
     if(curr%2 == 0) {
-        q.push({curr/2, currCnt});
-        q.push({(curr/2) - 1, currCnt});
+        if(curr/2>0) q.push({curr/2, currCnt});
+        if((curr/2)-1>0) q.push({(curr/2) - 1, currCnt});
     } 
     else {
-        q.push({curr/2, currCnt*2});
+        if(curr/2>0) q.push({curr/2, currCnt*2});
     }
 }
 
@@ -50,8 +56,8 @@ int main() {
         queue<Pll> q; // remain seat, count
         q.push({n, 1});
         while(true) {
-            if( currDivCnt + pow(2, (div)) >= k ) break;
-            currDivCnt += pow(2, (div));
+            if( currDivCnt + powll(2, (div)) >= k ) break;
+            currDivCnt += powll(2, (div));
             div++;
             vector<Pll> v;
             while(!q.empty()) {
@@ -62,14 +68,13 @@ int main() {
 
             ll curr = v[0].xx;
             ll currCnt = v[0].yy;
-            for(int i=1; i<v.size();) {
+            for(int i=1; i<v.size();i++) {
                 if(curr == v[i].xx) currCnt += v[i].yy;
                 else {
                     divide(q, curr, currCnt);
                     curr = v[i].xx;
                     currCnt = v[i].yy;
                 }
-                i++;
             }
             divide(q, curr, currCnt);
         }
