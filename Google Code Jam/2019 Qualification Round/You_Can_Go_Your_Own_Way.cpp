@@ -29,6 +29,15 @@ typedef pair<ll, ll> Pll;
 int T;
 
 int main() {
-    // i will update after the end of the round
+    cin>>T;
+    rep(t, 1, T+1){
+        int n; cin>>n;
+        string s; cin>>s;
+        cout<<"Case #"<<t<<": ";
+        rep(i, 0, s.size()) {
+            cout<<(char)('S' + 'E' - s[i]);
+        }
+        cout<<endl;
+    }
     return 0;
 }

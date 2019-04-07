@@ -30,6 +30,26 @@ int n, T;
 int sz = 1;
 
 int main() {
-    // i will update after the end of the round
+    cin>>T;
+    rep(t, 1, T+1){
+        sz = 1;
+        string s; cin>>s;
+        string ret1 = "";
+        string ret2 = "";
+        rep(i, 0, s.size()) {
+            int curr = (int)(s[i]-'0');
+            int a = curr/2 + curr%2;
+            int b = curr/2;
+            while(a==4||b==4) {
+                a++;
+                b--;
+            }
+            ret1 += (char)('0' + a);
+            ret2 += (char)('0' + b);
+        }
+        ret1 = (ret1[0] == '0' && ret1.size()!=1 ) ? ret1.substr(1) : ret1;
+        ret2 = (ret2[0] == '0' && ret2.size()!=1 ) ? ret2.substr(1) : ret2;
+        cout<<"Case #"<<t<<": "<<ret1<<" "<<ret2<<endl;
+    }
     return 0;
 }
