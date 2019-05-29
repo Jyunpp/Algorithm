@@ -26,7 +26,7 @@ typedef pair<int, int> P;
 typedef pair<ll, ll> Pll;
 
 int t;
-int r, c, k;
+int r, c, K;
 int arr[301][301];
 int rightBondary[301][301];
 
@@ -35,14 +35,29 @@ int main() {
     rep(T, 1, t+1) {
         int ret = 0;
         // input
-        cin>>r>>c>>k;
+        cin>>r>>c>>K;
         rep(i, 1, r+1) rep(j, 1, c+1) cin>>arr[i][j];
 
         // rightBondary 전처리
         rep(i, 1, r+1) {
             rep(j, 1, c+1) {
                 int rbIdx = j;
-                while(rbIdx+1 <=c && abs(arr[i][rbIdx+1] - arr[i][rbIdx]) <= k) rbIdx++;
+                int mini = arr[i][j];
+                int maxi = arr[i][j];
+                while(rbIdx+1 <=c) {
+                    int nextIdx = rbIdx+1;
+                    int next = arr[i][nextIdx];
+                    bool can = true;
+                    if(next<mini) {
+                        if(maxi-next > K) can = false;
+                        mini = next;
+                    } else if (next>maxi) {
+                        if(next-mini > K) can = false;
+                        maxi = next;
+                    }
+                    if(can) rbIdx = nextIdx;
+                    else break;
+                }
                 rightBondary[i][j] = (rbIdx-j); // 가능한 distance 저장
             }
         }
@@ -52,9 +67,6 @@ int main() {
             rep(j, 1, c+1) {
                 int currRb = -1;
                 for(int k=0; i+k <=r; k++) {
-                    // 인접한 row 간에 조건 확인
-                    if(k!=0 && abs(arr[i+k-1][j] - arr[i+k][j]) > k) continue;
-
                     if(currRb == -1) currRb = rightBondary[i][j];
                     else currRb = min(currRb, rightBondary[i+k][j]); // righyBoundary 중 최소값이 가능한 값
                     
